@@ -14,13 +14,17 @@
     <link rel="android-chrome-192x192" href="./assets/images/android-chrome-192x192.png" sizes="192x192">
     <link rel="android-chrome-512x512" href="./assets/images/android-chrome-512x512.png" sizes="512x512">
     <script src="./assets/3.4.5"></script>
-   
+    <link rel="stylesheet" href="npm/swiper%4011/swiper-bundle.min.css">
     <style>
         * {
             user-select: none;
         }
 
-       
+        @keyframes slide-up {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
 
             to {
                 transform: translateY(0);
@@ -28,7 +32,10 @@
             }
         }
 
-       
+        .slide-up {
+            animation: slide-up 0.5s ease-out;
+        }
+
         .hidden {
             display: none;
         }
@@ -70,9 +77,18 @@
         }
 
         /* Make the Swiper container vertical */
-       
+        .swiper {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 10px; /* Adjust the height as needed */
+        }
 
-        
+        .swiper-slide {
+            margin-bottom: 10px;
+            display: block;
+            max-height: 200px;
+        }
 
         .boosters-button-detail {
             display: flex;
@@ -122,8 +138,6 @@
         <div class="boosters-title" style="padding: 0 1.25rem">
             <h2 class="select-none text-2xl">Tasks</h2>
         </div>
-        <div class="swiper skinSwiper">
-            <div class="swiper-wrapper">
                 <!-- 1 Task   x channel link -->
                 <div class="swiper-slide slide">
                     <div class="skin-button m-b-1" id="coin">
