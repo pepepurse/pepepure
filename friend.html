@@ -49,34 +49,58 @@
       </div>
     </div>
 
-    <button id="shareButton" class="bg-slate-900 hover:bg-slate-900/95 text-white w-full py-6 mt-4 rounded-3xl shadow-lg flex items-center justify-center">
-      <span>Share with a friend</span>
-    </button>
+    <!-- Share Buttons -->
+    <div class="flex space-x-4 mt-6">
+      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareTelegram()">
+        <img src="./assets/images/telegram.png" alt="Telegram" width="25px" class="mr-2">
+        Share on Telegram
+      </button>
+      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareWhatsapp()">
+        <img src="./assets/images/whatsapp.png" alt="WhatsApp" width="25px" class="mr-2">
+        Share on WhatsApp
+      </button>
+    </div>
+
+    <div class="flex space-x-4 mt-4">
+      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareFacebook()">
+        <img src="./assets/images/facebook.png" alt="Facebook" width="25px" class="mr-2">
+        Share on Facebook
+      </button>
+      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareX()">
+        <img src="./assets/images/x.png" alt="X" width="25px" class="mr-2">
+        Share on X (Twitter)
+      </button>
+    </div>
   </div>
 
   <script>
     var chatId = "<?php echo isset($_GET['chat_id']) ? htmlspecialchars($_GET['chat_id']) : ''; ?>";
+    const baseMessage = "Join me in PepepurseCoin and start mining today! Let's earn together!";
+    const baseUrl = "https://t.me/Pepepurse_bot?start=" + chatId;
 
-    document.getElementById('shareButton').addEventListener('click', function() {
-      const shareText = "Join me in PepepurseCoin and start mining today! Let's earn together!";
-      const shareUrl = "https://t.me/Pepepurse_bot?start=" + chatId;
+    // Share on Telegram
+    function shareTelegram() {
+      const url = `https://t.me/share/url?url=${encodeURIComponent(baseUrl)}&text=${encodeURIComponent(baseMessage)}`;
+      window.open(url, "_blank");
+    }
 
-      // Check if the Web Share API is available
-      if (navigator.share) {
-        navigator.share({
-          title: 'PepepurseCoin Invite',
-          text: shareText,
-          url: shareUrl
-        }).then(function() {
-          console.log('Shared successfully');
-        }).catch(function(error) {
-          console.error('Error in sharing: ', error);
-        });
-      } else {
-        // Fallback: Open share URL in a new window if the Share API is not supported
-        window.open("https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareText), "_blank");
-      }
-    });
+    // Share on WhatsApp
+    function shareWhatsapp() {
+      const url = `https://wa.me/?text=${encodeURIComponent(baseMessage)}%20${encodeURIComponent(baseUrl)}`;
+      window.open(url, "_blank");
+    }
+
+    // Share on Facebook
+    function shareFacebook() {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(baseUrl)}`;
+      window.open(url, "_blank");
+    }
+
+    // Share on X (Twitter)
+    function shareX() {
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(baseMessage)}&url=${encodeURIComponent(baseUrl)}`;
+      window.open(url, "_blank");
+    }
   </script>
 </body>
 
