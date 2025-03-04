@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./assets/3.4.5"></script>
   <style>
     body,
     html {
@@ -13,14 +12,53 @@
     }
 
     .full-height {
-      height: 108%;
+      height: 100%;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .popup-content h2 {
+      margin-bottom: 20px;
+    }
+
+    .popup-content a {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .popup-content a:hover {
+      background-color: #45a049;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/style-2.css">
-  <link rel="stylesheet" href="./assets/css/responsive-1.css">
+  <title>Share Example</title>
 </head>
 
-<body class="boost">
+<body>
+
   <div class="text-white p-4 rounded-lg max-w-md mx-auto full-height flex flex-col">
     <div class="flex justify-between items-center mb-4">
       <a href="home.html">
@@ -30,76 +68,51 @@
         </svg>
       </a>
     </div>
-    <div class="flex-grow overflow-auto">
-      <h2 class="text-center text-2xl font-bold mb-2">Invite friends!</h2>
-      <p class="text-center mb-4">You and your friend will receive bonuses</p>
-      <div class="space-y-4">
-        <div class="bg-slate-900 p-4 flex items-center rounded-3xl shadow-lg">
-          <img src="./assets/images/f.png" width="50px" height="50px" alt="gift" class="w-12 h-12 mr-4">
-          <div>
-            <p class="font-bold">Invite a friend</p>
-            <p class="text-yellow-400">+5,000 for you and your friend</p>
-          </div>
-        </div>
+
+    <!-- Share Button -->
+    <button onclick="showSharePopup()" class="bg-slate-900 hover:bg-slate-900/95 text-white w-full py-6 mt-4 rounded-3xl shadow-lg flex items-center justify-center">
+      Share Now
+    </button>
+
+    <!-- Popup for sharing options -->
+    <div id="sharePopup" class="popup">
+      <div class="popup-content">
+        <h2>Select where to share</h2>
+        <a href="https://t.me/share/url?url=https://t.me/Pepepurse_bot&text=Join%20me%20on%20PepepurseCoin" target="_blank">Share on Telegram</a>
+        <a href="https://wa.me/?text=Join%20me%20on%20PepepurseCoin%20and%20start%20mining%20today!" target="_blank">Share on WhatsApp</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://t.me/Pepepurse_bot" target="_blank">Share on Facebook</a>
+        <a href="https://twitter.com/intent/tweet?text=Join%20me%20on%20PepepurseCoin%20and%20start%20mining%20today!&url=https://t.me/Pepepurse_bot" target="_blank">Share on Twitter</a>
+        <a href="https://www.youtube.com/channel/UC0E5BGJS0cfOPYbBlPq6vrA" target="_blank">Share on YouTube</a>
+        <button onclick="closePopup()" style="background-color: #f44336;">Close</button>
       </div>
-
-      <h3 class="mt-6 mb-2">List of your friends (0)</h3>
-      <div class="space-y-2">
-        <div class="space-y-2"></div>
-      </div>
     </div>
 
-    <!-- Share Buttons -->
-    <div class="flex space-x-4 mt-6">
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareTelegram()">
-        <img src="./assets/images/telegram.png" alt="Telegram" width="25px" class="mr-2">
-        Share on Telegram
-      </button>
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareWhatsapp()">
-        <img src="./assets/images/whatsapp.png" alt="WhatsApp" width="25px" class="mr-2">
-        Share on WhatsApp
-      </button>
-    </div>
-
-    <div class="flex space-x-4 mt-4">
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareFacebook()">
-        <img src="./assets/images/facebook.png" alt="Facebook" width="25px" class="mr-2">
-        Share on Facebook
-      </button>
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareX()">
-        <img src="./assets/images/x.png" alt="X" width="25px" class="mr-2">
-        Share on X (Twitter)
-      </button>
-    </div>
   </div>
 
   <script>
-    var chatId = "<?php echo isset($_GET['chat_id']) ? htmlspecialchars($_GET['chat_id']) : ''; ?>";
-    const baseMessage = "Join me in PepepurseCoin and start mining today! Let's earn together!";
-    const baseUrl = "https://t.me/Pepepurse_bot?start=" + chatId;
-
-    // Share on Telegram
-    function shareTelegram() {
-      const url = `https://t.me/share/url?url=${encodeURIComponent(baseUrl)}&text=${encodeURIComponent(baseMessage)}`;
-      window.open(url, "_blank");
+    // Show the popup with share options
+    function showSharePopup() {
+      document.getElementById("sharePopup").style.display = "flex";
     }
 
-    // Share on WhatsApp
-    function shareWhatsapp() {
-      const url = `https://wa.me/?text=${encodeURIComponent(baseMessage)}%20${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
+    // Close the popup
+    function closePopup() {
+      document.getElementById("sharePopup").style.display = "none";
     }
 
-    // Share on Facebook
-    function shareFacebook() {
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
-    }
-
-    // Share on X (Twitter)
-    function shareX() {
-      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(baseMessage)}&url=${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
+    // Optional: Use the native share API for mobile devices
+    if (navigator.share) {
+      document.querySelector('.share-btn').addEventListener('click', function() {
+        navigator.share({
+          title: 'Pepepurse Coin',
+          text: 'Join me on PepepurseCoin and start mining today! Let\'s earn together!',
+          url: 'https://t.me/Pepepurse_bot'
+        }).then(() => {
+          console.log('Thanks for sharing!');
+        }).catch((error) => {
+          console.log('Error: ' + error);
+        });
+      });
     }
   </script>
 </body>
