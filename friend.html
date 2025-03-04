@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -21,7 +21,7 @@
 </head>
 
 <body class="boost">
-  <div class=" text-white p-4 rounded-lg max-w-md mx-auto full-height flex flex-col">
+  <div class="text-white p-4 rounded-lg max-w-md mx-auto full-height flex flex-col">
     <div class="flex justify-between items-center mb-4">
       <a href="home.html">
         <svg width="35px" height="35px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,7 @@
       <p class="text-center mb-4">You and your friend will receive bonuses</p>
       <div class="space-y-4">
         <div class="bg-slate-900 p-4 flex items-center rounded-3xl shadow-lg">
-          <img src="./assets/images/f.png" width="50px" height="50px" alt="gift" class="w-12 h-12 mr-4">   
+          <img src="./assets/images/f.png" width="50px" height="50px" alt="gift" class="w-12 h-12 mr-4">
           <div>
             <p class="font-bold">Invite a friend</p>
             <p class="text-yellow-400">+5,000 for you and your friend</p>
@@ -43,35 +43,39 @@
         </div>
       </div>
 
-      <h3 class="mt-6 mb-2">List of your friends (0)</h3><div class="space-y-2"><div class="space-y-2"></div>    </div>
-  </div>
-  <button id="inviteButton" class="bg-slate-900 hover:bg-slate-900/95 text-white w-full py-6 mt-4 rounded-3xl shadow-lg flex items-center justify-center">
-    <span>Invite a friend</span>
-  </button>
-  <p id="copyMessage" class="text-center text-green-500 mt-4 hidden">Copy Success..!</p>
+      <h3 class="mt-6 mb-2">List of your friends (0)</h3>
+      <div class="space-y-2">
+        <div class="space-y-2"></div>
+      </div>
+    </div>
+
+    <button id="shareButton" class="bg-slate-900 hover:bg-slate-900/95 text-white w-full py-6 mt-4 rounded-3xl shadow-lg flex items-center justify-center">
+      <span>Share with a friend</span>
+    </button>
   </div>
 
   <script>
-    
     var chatId = "<?php echo isset($_GET['chat_id']) ? htmlspecialchars($_GET['chat_id']) : ''; ?>";
-    
-    document.getElementById('inviteButton').addEventListener('click', function() {
-    
-      const textToCopy = "https://t.me/share/url?url=https://t.me/Pepepurse_bot?start=" + chatId + "&text=Join%20me%20in%20pepepurseCoin%20and%20start%20mining%20today!%20Let's%20earn%20together!";
-      
-      navigator.clipboard.writeText(textToCopy).then(function() {
-        const copyMessage = document.getElementById('copyMessage');
-        copyMessage.classList.remove('hidden');
-        copyMessage.classList.add('block');
 
-        setTimeout(function() {
-          copyMessage.classList.remove('block');
-          copyMessage.classList.add('hidden');
-          window.location = "https://t.me/share/url?url=https://t.me/Pepepurse_bot?start=" + chatId + "&text=Join%20me%20in%20pepepurseCoin%20and%20start%20mining%20today!%20Let's%20earn%20together!"
-        }, 2000);
-      }).catch(function(err) {
-        console.error('Error in copying text: ', err);
-      });
+    document.getElementById('shareButton').addEventListener('click', function() {
+      const shareText = "Join me in PepepurseCoin and start mining today! Let's earn together!";
+      const shareUrl = "https://t.me/Pepepurse_bot?start=" + chatId;
+
+      // Check if the Web Share API is available
+      if (navigator.share) {
+        navigator.share({
+          title: 'PepepurseCoin Invite',
+          text: shareText,
+          url: shareUrl
+        }).then(function() {
+          console.log('Shared successfully');
+        }).catch(function(error) {
+          console.error('Error in sharing: ', error);
+        });
+      } else {
+        // Fallback: Open share URL in a new window if the Share API is not supported
+        window.open("https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareText), "_blank");
+      }
     });
   </script>
 </body>
