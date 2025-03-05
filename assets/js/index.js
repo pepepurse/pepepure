@@ -198,3 +198,126 @@ function claimYouTubeReward(event) {
         claimButton.textContent = 'Already Claimed';
     }
 }
+
+function claimYouTubeReward(event) {
+    event.stopPropagation();
+    const claimButton = event.target;
+    const alreadyClaimed = localStorage.getItem('ytRewardClaimed');
+
+    if (!alreadyClaimed) {
+        // Add coins
+        let coins = Number(localStorage.getItem('coins')) || 0;
+        coins += 50000;
+        localStorage.setItem('coins', coins);
+        
+        // Update UI
+        document.getElementById('score').textContent = `$ ${coins.toLocaleString()}`;
+        claimButton.textContent = 'Claimed!';
+        claimButton.setAttribute('claimed', 'true');
+        
+        // Mark as claimed
+        localStorage.setItem('ytRewardClaimed', 'true');
+        
+        // Visual feedback
+        claimButton.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            claimButton.style.transform = 'scale(1)';
+        }, 200);
+    } else {
+        alert('You already claimed this reward!');
+        claimButton.textContent = 'Already Claimed';
+    }
+}
+
+
+
+
+function claim1Reward(event) {
+    event.stopPropagation();
+    const claimButton = event.target;
+    const alreadyClaimed = localStorage.getItem('claim1Reward');
+
+    if (!alreadyClaimed) {
+        // Add coins
+        let coins = Number(localStorage.getItem('coins')) || 0;
+        coins += 50000;
+        localStorage.setItem('coins', coins);
+        
+        // Update UI
+        document.getElementById('score').textContent = `$ ${coins.toLocaleString()}`;
+        claimButton.textContent = 'Claimed!';
+        claimButton.setAttribute('claimed', 'true');
+        
+        // Mark as claimed
+        localStorage.setItem('claim1Reward', 'true');
+        
+        // Visual feedback
+        claimButton.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            claimButton.style.transform = 'scale(1)';
+        }, 200);
+    } else {
+        alert('You already claimed this reward!');
+        claimButton.textContent = 'Already Claimed';
+    }
+}
+
+function claim2Reward(event) {
+    event.stopPropagation();
+    const claimButton = event.target;
+    const alreadyClaimed = localStorage.getItem('claim2Reward');
+
+    if (!alreadyClaimed) {
+        // Add coins
+        let coins = Number(localStorage.getItem('coins')) || 0;
+        coins += 50000;
+        localStorage.setItem('coins', coins);
+        
+        // Update UI
+        document.getElementById('score').textContent = `$ ${coins.toLocaleString()}`;
+        claimButton.textContent = 'Claimed!';
+        claimButton.setAttribute('claimed', 'true');
+        
+        // Mark as claimed
+        localStorage.setItem('claim2Reward', 'true');
+        
+        // Visual feedback
+        claimButton.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            claimButton.style.transform = 'scale(1)';
+        }, 200);
+    } else {
+        alert('You already claimed this reward!');
+        claimButton.textContent = 'Already Claimed';
+    }
+}
+
+function claim3Reward(event) {
+    event.stopPropagation();
+    const claimButton = event.target;
+    const alreadyClaimed = localStorage.getItem('claim3Reward');
+
+    if (!alreadyClaimed) {
+        // Add coins
+        let coins = Number(localStorage.getItem('coins')) || 0;
+        coins += 50000;
+        localStorage.setItem('coins', coins);
+        
+        // Update UI
+        document.getElementById('score').textContent = `$ ${coins.toLocaleString()}`;
+        claimButton.textContent = 'Claimed!';
+        claimButton.setAttribute('claimed', 'true');
+        
+        // Mark as claimed
+        localStorage.setItem('claim3Reward', 'true');
+        
+        // Visual feedback
+        claimButton.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            claimButton.style.transform = 'scale(1)';
+        }, 200);
+    } else {
+        alert('You already claimed this reward!');
+        claimButton.textContent = 'Already Claimed';
+    }
+}
