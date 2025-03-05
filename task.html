@@ -120,6 +120,73 @@
     cursor: not-allowed;
     text-decoration: line-through;
 }
+
+/* Task Cards Styling */
+.task-card {
+    padding: 15px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.task-desc {
+    font-size: 0.9em;
+    color: #eee;
+    margin: 10px 0;
+}
+
+.task-reward {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 15px 0;
+}
+
+/* Task Card Styling */
+.task-card {
+    position: relative;
+    padding: 15px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.youtube-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+/* Prevent link covering button */
+.task-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%; /* Space for button */
+    background: transparent;
+    z-index: 2;
+}
+
+.claim-btn {
+    position: relative;
+    z-index: 3; /* Button on top */
+    margin-top: 15px;
+}
+
+
+
     </style>
 </head>
 
@@ -162,7 +229,7 @@
                                 </h4>
                                 <div class="boosters-button-data">
                                     <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                                    <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
+                                    <h5 class="claim-button" onclick="claim3Reward(event)">50,000 claim now</h5>
                                 </div>
                             </div>
                         </a>
@@ -184,7 +251,7 @@
                     </h4>
                     <div class="boosters-button-data">
                         <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
+                        <h5 class="claim-button" onclick="claim2Reward(event)">50,000 claim now</h5>
                     </div>
                 </div>
             </a>
@@ -206,7 +273,7 @@
                     </h4>
                     <div class="boosters-button-data">
                         <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
+                        <h5 class="claim-button" onclick="claim1Reward(event)">50,000 claim now</h5>
                     </div>
                 </div>
             </a>
@@ -234,6 +301,19 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Notifications and other scripts -->
     <script src="npm/swiper%4011/swiper-bundle.min.js"></script>
