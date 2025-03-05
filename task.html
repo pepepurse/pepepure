@@ -110,6 +110,16 @@
                 margin-bottom: 15px; /* Add more spacing between items */
             }
         }
+        .claim-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.claim-button[claimed] {
+    color: #888 !important;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
     </style>
 </head>
 
@@ -139,46 +149,42 @@
             <h2 class="select-none text-2xl">Tasks</h2>
         </div>
                <!-- 1 Task x channel link (YouTube) -->
-<div class="swiper-slide slide">
-    <div class="skin-button m-b-1" id="coin">
-        <div class="boosters-button-detail">
-            <a href="https://x.com/pepepurse" target="_blank">
-
-
-                <!-- ^ x channel link  ^ -->
-                <div class="boosters-button-image" id="coin">
-                    <img src="./assets/images/x.png" width="50px" alt="Character" onclick="startVibration()">
-                </div>
-                <div>
-                    <h4 class="tooltip">follow us on youtube
-                        <span class="tooltiptext">Daily bonus with unique rewards</span>
-                    </h4>
-                    <div class="boosters-button-data">
-                        <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5>50,000 claim now </h5>
+               <div class="swiper-slide slide">
+                <div class="skin-button m-b-1" id="coin">
+                    <div class="boosters-button-detail">
+                        <a href="https://x.com/pepepurse" target="_blank">
+                            <div class="boosters-button-image" id="coin">
+                                <img src="./assets/images/x.png" width="50px" alt="Character" onclick="startVibration()">
+                            </div>
+                            <div>
+                                <h4 class="tooltip">follow us
+                                    <span class="tooltiptext">Daily bonus with unique rewards</span>
+                                </h4>
+                                <div class="boosters-button-data">
+                                    <img src="./assets/images/pc.png" width="20px" class="m-r-25">
+                                    <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </a>
-        </div>
-    </div>
-</div>
+            </div>
 
 <!-- 2 Task Telegram channel -->
 <div class="swiper-slide slide">
     <div class="skin-button m-b-1" id="coin">
         <div class="boosters-button-detail">
-            <a href="https://t.me/Pepepurse_bot" target="_blank">
-                <!-- ^ Telegram channel link  ^ -->
+            <a href="https://t.me/+RGp9nZTAAAhhYzU0" target="_blank">
                 <div class="boosters-button-image" id="coin">
                     <img src="./assets/images/telegram.png" width="50px" alt="Character" onclick="startVibration()">
                 </div>
                 <div>
-                    <h4 class="tooltip">Join Community
+                    <h4 class="tooltip">join us
                         <span class="tooltiptext">Daily bonus with unique rewards</span>
                     </h4>
                     <div class="boosters-button-data">
                         <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5>50,000 claim now </h5>
+                        <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
                     </div>
                 </div>
             </a>
@@ -191,31 +197,27 @@
     <div class="skin-button m-b-1" id="coin">
         <div class="boosters-button-detail">
             <a href="https://www.tiktok.com/@pepepurse_offical?is_from_webapp=1&sender_device=pc" target="_blank">
-                <!-- ^ TikTok channel link  ^ -->
                 <div class="boosters-button-image" id="coin">
                     <img src="./assets/images/tiktok.png" width="50px" alt="Character" onclick="startVibration()">
                 </div>
                 <div>
-                    <h4 class="tooltip">follow us on tiktok
+                    <h4 class="tooltip">follow us 
                         <span class="tooltiptext">Daily bonus with unique rewards</span>
                     </h4>
                     <div class="boosters-button-data">
                         <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5>50,000 claim now </h5>
+                        <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
                     </div>
                 </div>
             </a>
         </div>
     </div>
 </div>
-
 <!-- 4 Task YouTube channel -->
 <div class="swiper-slide slide">
     <div class="skin-button m-b-1" id="coin">
         <div class="boosters-button-detail">
-            <a href="vnd.youtube://www.youtube.com/@pepepurse?si=LS2hZcjeJROojjpj" target="_blank">   
-
-                <!-- ^ YouTube channel link  ^ -->
+            <a href="vnd.youtube://www.youtube.com/@pepepurse?si=0PsKDvMnTdnwEZOt" target="_blank">   
                 <div class="boosters-button-image" id="coin">
                     <img src="./assets/images/youtube.png" width="50px" alt="Character" onclick="startVibration()">
                 </div>
@@ -225,14 +227,13 @@
                     </h4>
                     <div class="boosters-button-data">
                         <img src="./assets/images/pc.png" width="20px" class="m-r-25">
-                        <h5>50,000 claim now </h5>
+                        <h5 class="claim-button" onclick="claimYouTubeReward(event)">50,000 claim now</h5>
                     </div>
                 </div>
             </a>
         </div>
     </div>
 </div>
-
 
     <!-- Notifications and other scripts -->
     <script src="npm/swiper%4011/swiper-bundle.min.js"></script>
@@ -245,6 +246,7 @@
             grabCursor: true,
         });
     </script>
+      <script src="./assets/js/index.js"></script>
 </body>
 
 </html>
