@@ -1,133 +1,193 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./assets/3.4.5"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body,
-    html {
-      height: 100%;
-      margin: 0;
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    
+    .pending-reward {
+      animation: pulse 2s infinite;
     }
 
-    .full-height {
-      height: 108%;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: yellow;
+      border-radius: 4px;
     }
   </style>
-  <link rel="stylesheet" href="./assets/css/style-2.css">
-  <link rel="stylesheet" href="./assets/css/responsive-1.css">
 </head>
 
-<body class="boost">
-  <div class="text-white p-4 rounded-lg max-w-md mx-auto full-height flex flex-col">
-    <div class="flex justify-between items-center mb-4">
-      <a href="home.html">
-        <svg width="35px" height="35px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 11.9299H2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M8.00009 19L2.84009 14C2.5677 13.7429 2.35071 13.433 2.20239 13.0891C2.05407 12.7452 1.97754 12.3745 1.97754 12C1.97754 11.6255 2.05407 11.2548 2.20239 10.9109C2.35071 10.567 2.5677 10.2571 2.84009 10L8.00009 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
+<body class="bg-yellow-800 text-white min-h-screen">
+  <div class="container mx-auto p-4">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <a href="home.html" class="inline-block p-2 bg-yellow-700 rounded-lg hover:bg-yellow-600 transition">
+        ← 
       </a>
     </div>
-    <div class="flex-grow overflow-auto">
-      <h2 class="text-center text-2xl font-bold mb-2">Invite friends!</h2>
-      <p class="text-center mb-4">You and your friend will receive bonuses</p>
-      <div class="space-y-4">
-        <div class="bg-slate-900 p-4 flex items-center rounded-3xl shadow-lg">
-          <img src="./assets/images/f.png" width="50px" height="50px" alt="gift" class="w-12 h-12 mr-4">
-          <div>
-            <p class="font-bold">Invite a friend</p>
-            <p class="text-yellow-400">+5,000 for you and your friend</p>
+
+    <!-- Main Content -->
+    <div class="max-w-md mx-auto">
+      <h1 class="text-3xl font-bold text-center mb-4">Invite Your Friends</h1>
+      <div class="bg-yellow-700 p-6 rounded-xl mb-6">
+        <!-- Reward Section -->
+        <div class="bg-yellow-800 p-4 rounded-lg mb-6">
+          <div class="flex justify-between mb-2">
+            <span>Invites:</span>
+            <span id="totalInvites">0</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span>Pending Rewards:</span>
+            <span id="pendingRewards">₹0</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span>Total Earned:</span>
+            <span id="totalEarned">₹0</span>
+          </div>
+          <div class="flex justify-between text-green-400">
+            <span>5 Invites Bonus:</span>
+            <span id="bonusStatus">Available 🎁</span>
           </div>
         </div>
+
+        <!-- Referral Link Box -->
+        <div class="mb-6">
+          <div class="flex items-center bg-yellow-800 rounded-lg p-3">
+            <input type="text" id="referralLink" 
+                   class="bg-transparent flex-1 outline-none" 
+                   readonly
+                   value="Loading...">
+            <button onclick="copyLink()" 
+                    class="bg-blue-600 px-4 py-2 rounded-lg ml-2 hover:bg-yellow-700 transition">
+              Copy
+            </button>
+          </div>
+          <p id="copyMessage" class="text-green-500 text-sm mt-2 hidden">
+           Link copied! ✅
+          </p>
+        </div>
+
+        <!-- Share Buttons -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <button onclick="share('whatsapp')" class="bg-yellow-600 p-3 rounded-lg flex items-center justify-center hover:bg-yellow-500 transition">
+            <img src="wh.png" class="w-6 h-6 mr-2" alt=""> WhatsApp
+          </button>
+          <button onclick="share('telegram')" class="bg-yellow-600 p-3 rounded-lg flex items-center justify-center hover:bg-yellow-500 transition">
+            <img src="tg.png" class="w-6 h-6 mr-2" alt=""> Telegram
+          </button>
+        </div>
+
+        <!-- Friends List -->
+        <h3 class="text-xl mb-2">Your Friends (<span id="friendsCount">0</span>)</h3>
+        <div id="friendsList" class="space-y-2 h-48 overflow-y-auto pr-2">
+          <!-- Friends List Yahan Aayegi -->
+        </div>
       </div>
-
-      <h3 class="mt-6 mb-2">List of your friends (0)</h3>
-      <div class="space-y-2">
-        <div class="space-y-2"></div>
-      </div>
-    </div>
-
-    <!-- Share Buttons -->
-    <div class="flex space-x-4 mt-6">
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareTelegram()">
-        <img src="./assets/images/telegram.png" alt="Telegram" width="25px" class="mr-2">
-        Share on Telegram
-      </button>
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareWhatsapp()">
-        <img src="./assets/images/whatsapp.png" alt="WhatsApp" width="25px" class="mr-2">
-        Share on WhatsApp
-      </button>
-    </div>
-
-    <div class="flex space-x-4 mt-4">
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareFacebook()">
-        <img src="./assets/images/facebook.png" alt="Facebook" width="25px" class="mr-2">
-        Share on Facebook
-      </button>
-      <button class="share-btn bg-slate-900 hover:bg-slate-900/95 text-white w-full py-4 rounded-3xl shadow-lg flex items-center justify-center" onclick="shareX()">
-        <img src="./assets/images/x.png" alt="X" width="25px" class="mr-2">
-        Share on X (Twitter)
-      </button>
-    </div>
-
-    <!-- Copy Link Button -->
-    <div class="flex justify-center mt-6">
-      <button id="copyButton" class="bg-slate-900 hover:bg-slate-900/95 text-white py-4 px-8 rounded-3xl shadow-lg flex items-center justify-center">
-        <img src="./assets/images/pc.png" alt="Copy" width="25px" class="mr-2">
-        Copy Link
-      </button>
-      <p id="copyMessage" class="text-green-500 ml-4 hidden">Link copied to clipboard!</p>
     </div>
   </div>
 
   <script>
-    var chatId = "<?php echo isset($_GET['chat_id']) ? htmlspecialchars($_GET['chat_id']) : ''; ?>";
-    const baseMessage = "Join me in PepepurseCoin and start mining today! Let's earn together!";
-    const baseUrl = "https://t.me/Pepepurse_bot?start=" + chatId;
+    // Constants
+    const REWARD_PER_FRIEND = 5000;
+    const BONUS_AMOUNT = 25000;
+    const WAIT_TIME = 20 * 60 * 1000; // 20 minutes
 
-    // Share on Telegram
-    function shareTelegram() {
-      const url = `https://t.me/share/url?url=${encodeURIComponent(baseUrl)}&text=${encodeURIComponent(baseMessage)}`;
-      window.open(url, "_blank");
+    // Initialize Storage
+    if(!localStorage.getItem('userId')) {
+      localStorage.setItem('userId', Date.now().toString());
+      localStorage.setItem('referrals', JSON.stringify([]));
+      localStorage.setItem('totalEarned', '0');
+      localStorage.setItem('bonusClaimed', 'false');
     }
 
-    // Share on WhatsApp
-    function shareWhatsapp() {
-      const url = `https://wa.me/?text=${encodeURIComponent(baseMessage)}%20${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
+    // Generate Referral Link
+    function generateReferralLink() {
+      return `${window.location.origin}/https://t.me/Pepepurse_bot?ref=${localStorage.getItem('userId')}`;
     }
 
-    // Share on Facebook
-    function shareFacebook() {
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
+    // Copy Link Function
+    function copyLink() {
+      const link = generateReferralLink();
+      navigator.clipboard.writeText(link);
+
+      // Add New Referral
+      const referrals = JSON.parse(localStorage.getItem('referrals'));
+      referrals.push(Date.now());
+      localStorage.setItem('referrals', JSON.stringify(referrals));
+
+      // Check 5 Invites Bonus
+      if(referrals.length >= 5 && localStorage.getItem('bonusClaimed') === 'false') {
+        let totalEarned = parseInt(localStorage.getItem('totalEarned'));
+        totalEarned += BONUS_AMOUNT;
+        localStorage.setItem('totalEarned', totalEarned.toString());
+        localStorage.setItem('bonusClaimed', 'true');
+        alert(`Congratulations! You have received a ${BONUS_AMOUNT} bonus for 5 invites!`);
+      }
+
+      updateDisplay();
+      showCopyMessage();
     }
 
-    // Share on X (Twitter)
-    function shareX() {
-      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(baseMessage)}&url=${encodeURIComponent(baseUrl)}`;
-      window.open(url, "_blank");
+    // Update Display
+    function updateDisplay() {
+      const referrals = JSON.parse(localStorage.getItem('referrals'));
+      const pending = referrals.filter(t => Date.now() - t < WAIT_TIME);
+      const claimed = referrals.length - pending.length;
+
+      // Update Numbers
+      document.getElementById('totalInvites').textContent = referrals.length;
+      document.getElementById('pendingRewards').textContent = `₹${pending.length * REWARD_PER_FRIEND}`;
+      document.getElementById('totalEarned').textContent = `₹${claimed * REWARD_PER_FRIEND + (localStorage.getItem('bonusClaimed') === 'true' ? BONUS_AMOUNT : 0)}`;
+      document.getElementById('friendsCount').textContent = referrals.length;
+      document.getElementById('bonusStatus').textContent = 
+        localStorage.getItem('bonusClaimed') === 'true' ? 'Claimed ✅' : 'Available 🎁';
+
+      // Update Friends List
+      const friendsList = document.getElementById('friendsList');
+      friendsList.innerHTML = referrals
+        .map((t, i) => `
+          <div class="bg-yellow-800 p-3 rounded-lg ${Date.now() - t < WAIT_TIME ? 'pending-reward' : ''}">
+            friend ${i+1} - 
+            ${Date.now() - t > WAIT_TIME ? 
+              '"Reward Received" ✅' : 
+              `Pending (${Math.ceil((WAIT_TIME - (Date.now() - t))/60000)}m)`}
+          </div>
+        `)
+        .join('');
     }
 
-    // Copy the share link to clipboard
-    document.getElementById("copyButton").addEventListener("click", function () {
-      const copyText = baseUrl;
-      navigator.clipboard.writeText(copyText).then(function () {
-        const copyMessage = document.getElementById("copyMessage");
-        copyMessage.classList.remove("hidden");
-        copyMessage.classList.add("block");
+    // Share Function
+    function share(platform) {
+      const link = encodeURIComponent(generateReferralLink());
+      const shareUrls = {
+        whatsapp: `https://wa.me/?text=Join%20using%20my%20link%20to%20earn%20₹${REWARD_PER_FRIEND}!%20${link}`,
+        telegram: `https://t.me/share/url?url=${link}&text=Join%20using%20my%20link%20to%20earn%20₹${REWARD_PER_FRIEND}!`
+      };
+      window.open(shareUrls[platform], '_blank');
+    }
 
-        setTimeout(function () {
-          copyMessage.classList.remove("block");
-          copyMessage.classList.add("hidden");
-        }, 2000);
-      }).catch(function (err) {
-        console.error("Error in copying text: ", err);
-      });
-    });
+    // Show Copy Message
+    function showCopyMessage() {
+      const msg = document.getElementById('copyMessage');
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 2000);
+    }
+
+    // Auto-Update Every 10 Seconds
+    setInterval(updateDisplay, 10000);
+
+    // Initial Setup
+    document.getElementById('referralLink').value = generateReferralLink();
+    updateDisplay();
   </script>
 </body>
-
 </html>
